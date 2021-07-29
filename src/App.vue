@@ -1,6 +1,16 @@
 <template>
-   <h1>Hello World</h1>
+   <the-header></the-header>
 </template>
+
+<script>
+import TheHeader from "./components/TheHeader.vue";
+
+export default {
+   components: {
+      "the-header": TheHeader,
+   },
+};
+</script>
 
 <style lang="scss">
 @font-face {
