@@ -1,11 +1,9 @@
 <template>
-   <the-header></the-header>
-   <section-template>
-      <the-navigation
-         v-bind:activeTab="activeTab"
-         v-on:change-tab="changeTab"
-      ></the-navigation>
-   </section-template>
+   <the-header id="header"></the-header>
+   <the-navigation
+      v-bind:activeTab="activeTab"
+      v-on:change-tab="changeTab"
+   ></the-navigation>
    <resource-list
       v-if="activeTab === 'resource-list'"
       v-bind:resources="resources"
@@ -15,8 +13,10 @@
       <add-resource
          v-if="activeTab === 'add-resource'"
          v-on:addResource="addResource"
+         v-on:invalidInput="toggleError"
       ></add-resource>
    </keep-alive>
+   <error-modal v-if="wrongInput" v-on:close-modal="toggleError"></error-modal>
 </template>
 
 <script>
@@ -24,6 +24,7 @@ import TheHeader from "./components/TheHeader.vue";
 import TheNavigation from "./components/TheNavigation.vue";
 import ResourceList from "./components/ResourceList.vue";
 import AddResource from "./components/AddResource.vue";
+import ErrorModal from "./components/ErrorModal.vue";
 
 export default {
    components: {
@@ -31,6 +32,7 @@ export default {
       "the-navigation": TheNavigation,
       "resource-list": ResourceList,
       "add-resource": AddResource,
+      "error-modal": ErrorModal,
    },
    data() {
       return {
@@ -54,6 +56,7 @@ export default {
             },
          ],
          activeTab: "resource-list",
+         wrongInput: false,
       };
    },
 
@@ -68,6 +71,9 @@ export default {
       addResource(data) {
          this.resources.push(data);
          this.activeTab = "resource-list";
+      },
+      toggleError() {
+         this.wrongInput = !this.wrongInput;
       },
    },
 };
@@ -119,5 +125,40 @@ textarea {
    font-family: "Oswald", sans-serif;
    font-size: 1rem;
    background: none;
+}
+
+.button {
+   padding: 0.5em 1em;
+   border-radius: 0.25em;
+   transition: color 0.25s ease, border-color 0.25s ease,
+      background-color 0.25s ease;
+   cursor: pointer;
+   &--red-fill {
+      background-color: firebrick;
+      color: white;
+      &:hover,
+      &:focus {
+         background-color: lighten(firebrick, 20%);
+      }
+   }
+   &--blue-fill {
+      background-color: midnightblue;
+      color: white;
+      transition: background-color 0.25s ease;
+      &:hover,
+      &:focus {
+         background-color: lighten(midnightblue, 20%);
+         color: white;
+      }
+   }
+   &--blue-outline {
+      color: midnightblue;
+      border: 2px solid midnightblue;
+      &:hover,
+      &:focus {
+         color: lighten(midnightblue, 20%);
+         border-color: lighten(midnightblue, 20%);
+      }
+   }
 }
 </style>

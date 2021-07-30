@@ -1,18 +1,26 @@
 <template>
-   <button
-      class="tab-navigation__button"
-      v-bind:class="{ 'tab-navigation__button--active': storedResourcesActive }"
-      v-on:click="changeTab('resource-list')"
-   >
-      Stored Resources
-   </button>
-   <button
-      class="tab-navigation__button"
-      v-bind:class="{ 'tab-navigation__button--active': addResourcesActive }"
-      v-on:click="changeTab('add-resource')"
-   >
-      Add Resource
-   </button>
+   <section-template>
+      <button
+         class="tab-navigation__button button"
+         v-bind:class="{
+            'button--blue-fill': storedResourcesActive,
+            'button--blue-outline': !storedResourcesActive,
+         }"
+         v-on:click="changeTab('resource-list')"
+      >
+         Stored Resources
+      </button>
+      <button
+         class="tab-navigation__button button"
+         v-bind:class="{
+            'button--blue-fill': addResourcesActive,
+            'button--blue-outline': !addResourcesActive,
+         }"
+         v-on:click="changeTab('add-resource')"
+      >
+         Add Resource
+      </button>
+   </section-template>
 </template>
 
 <script>
@@ -46,27 +54,8 @@ export default {
 <style lang="scss" scoped>
 .tab-navigation {
    &__button {
-      padding: 0.5em 1em;
-      border-radius: 0.25em;
-      color: midnightblue;
-      transition: color 0.25s ease;
-      cursor: pointer;
       &:not(:last-child) {
          margin-right: 0.5rem;
-      }
-      &:hover,
-      &:focus {
-         color: lighten(midnightblue, 20%);
-      }
-      &--active {
-         background-color: midnightblue;
-         color: white;
-         transition: background-color 0.25s ease;
-         &:hover,
-         &:focus {
-            background-color: lighten(midnightblue, 20%);
-            color: white;
-         }
       }
    }
 }

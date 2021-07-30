@@ -29,13 +29,14 @@
                v-model="link"
             />
          </div>
-         <button class="add-resource__button">Add</button>
+         <button class="add-resource__button button button--red-fill">Add</button>
       </form>
    </section-template>
 </template>
 
 <script>
 export default {
+   emits: ["add-resource", "invalid-input"],
    data() {
       return {
          title: "",
@@ -54,7 +55,21 @@ export default {
    },
    methods: {
       addResource() {
-         this.$emit("add-resource", this.formData);
+         if (
+            this.formData.title &&
+            this.formData.description &&
+            this.formData.link
+         ) {
+            this.$emit("add-resource", this.formData);
+            this.clearForm();
+         } else {
+            this.$emit("invalid-input");
+         }
+      },
+      clearForm() {
+         this.title = "";
+         this.description = "";
+         this.link = "";
       },
    },
 };
@@ -85,19 +100,6 @@ export default {
       &:focus {
          border-color: black;
          background-color: whitesmoke;
-      }
-   }
-   &__button {
-      padding: 0.5em 1em;
-      border-radius: 0.25em;
-      transition: color 0.25s ease;
-      cursor: pointer;
-      background-color: firebrick;
-      color: white;
-      transition: background-color 0.25s ease;
-      &:hover,
-      &:focus {
-         background-color: lighten(firebrick, 20%);
       }
    }
 }

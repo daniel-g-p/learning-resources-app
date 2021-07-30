@@ -1,7 +1,10 @@
 <template>
    <div class="resource">
       <h2 class="resource__heading">{{ title }}</h2>
-      <button class="resource__delete" v-on:click="deleteResource">
+      <button
+         class="resource__delete button button--blue-outline"
+         v-on:click="deleteResource"
+      >
          Delete
       </button>
       <p class="resource__description">{{ description }}</p>
@@ -45,17 +48,6 @@ export default {
    &__delete {
       font-size: 0.75rem;
       grid-column: 2 / 3;
-      padding: 0.5em 1em;
-      border-radius: 0.25em;
-      color: midnightblue;
-      border: 2px solid midnightblue;
-      transition: color 0.25s ease, border-color 0.25s ease;
-      cursor: pointer;
-      &:hover,
-      &:focus {
-         color: lighten(midnightblue, 20%);
-         border-color: lighten(midnightblue, 20%);
-      }
    }
    &__description {
       margin-bottom: 1.5rem;
